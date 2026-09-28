@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A local calculator for Christmas tree pricing, delivery costs, profit, margin and break-even sales.">
+    <title>Christmas tree margin calculator</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23164b3b'/%3E%3Cpath d='M32 10 19 28h8L15 44h34L37 28h8Z' fill='%23fff'/%3E%3Cpath d='M29 44h6v10h-6z' fill='%23d6a45e'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">2026 planning calculator</p>
+          <h1>Christmas tree margins</h1>
+          <p>Plan the selected cut trees up to 12 ft. Set quantities, compare retail prices and adjust your delivery costs to see the margin.</p>
+          <nav class="page-nav" aria-label="Calculators"><span aria-current="page">Trees</span><a href="./photography.html">Photography →</a></nav>
+        </div>
+        <button class="reset-button" id="reset-calculator" type="button">Reset defaults</button>
+      </header>
+
+      <p class="error" id="calculator-error" role="alert" hidden></p>
+
+      <form id="calculator-form" novalidate>
+        <div class="calculator-layout">
+          <div class="panel input-panel">
+            <section class="section" aria-labelledby="stock-heading">
+              <div class="section-heading">
+                <h2 id="stock-heading">Trees and prices</h2>
+                <p class="section-note">Bolton collection costs exclude VAT. Sell/tree is your delivered price.</p>
+              </div>
+              <div class="stock-controls">
+                <div class="stock-total"><span>Total trees in plan</span><strong id="total-trees-input">100</strong></div>
+                <div class="field market-discount"><label for="percentBelowMarket">Below We Tree Kings price (%)</label><input id="percentBelowMarket" name="percentBelowMarket" type="number" min="0" max="100" step="0.1" value="5"></div>
+                <label class="premium-switch" for="premiumQuality"><input id="premiumQuality" name="premiumQuality" type="checkbox"><span class="switch-track" aria-hidden="true"></span><span>Premium quality</span></label>
+              </div>
+              <div class="table-wrap">
+                <table class="stock-table">
+                  <thead><tr><th scope="col">Offer / supplier size</th><th scope="col">Grade used</th><th scope="col">Qty</th><th scope="col">Collect/tree</th><th scope="col">We Tree Kings</th><th scope="col">Sell/tree</th></tr></thead>
+                  <tbody id="product-inputs"></tbody>
+                </table>
+              </div>
+              <p class="section-footnote">The foot band is the offer label; the centimetre band is the supplier's quoted size. Norway and Noble foot labels follow your chosen mapping, not an exact unit conversion. Premium uses the supplier's Premium quote for that centimetre band where one exists; otherwise the non-premium quote stays in use. With Premium off, Standard is used first, then Regular or Value; Premium is used when it is the only quote. You can edit a collection cost; switching Premium refreshes all supplier costs. We Tree Kings prices follow the offer foot band and were checked 22 September 2026. Changing the percentage below their price replaces manual edits to matched prices. Blank comparisons need a selling price before adding stock.</p>
+            </section>
+
+            <section class="section" aria-labelledby="stands-heading">
+              <div class="section-heading">
+                <h2 id="stands-heading">Cinco stands</h2>
+                <p class="section-note">Enter stands sold; the calculator assumes you purchase exactly that many.</p>
+              </div>
+              <div class="table-wrap">
+                <table class="stand-table">
+                  <thead><tr><th scope="col">Stand</th><th scope="col">Sold</th><th scope="col">Supplier, ex VAT</th><th scope="col">Sell/stand</th></tr></thead>
+                  <tbody id="stand-inputs"></tbody>
+                </table>
+              </div>
+              <p class="section-footnote">Cinco 6 fits trees up to 6 ft; Cinco 8 up to 8 ft; Cinco 10 up to 10 ft. Supplier quotes exclude VAT. Selling prices are VAT-inclusive when registered. Stands are assumed to travel with tree deliveries, so they add no separate van days or leaflets.</p>
+            </section>
+
+            <section class="section" aria-labelledby="sales-heading">
+              <div class="section-heading"><h2 id="sales-heading">Sales assumptions</h2></div>
+              <div class="field-grid">
+                <div class="field"><label for="sellThrough">Sell-through</label><input id="sellThrough" name="sellThrough" type="number" min="0" max="100" step="1" value="100"><div class="range-caption"><span>0–100%</span><strong id="sell-through-label">100.0%</strong></div></div>
+                <div class="field"><label for="vatRate">VAT rate</label><input id="vatRate" name="vatRate" type="number" min="0" max="100" step="0.1" value="20"></div>
+                <div class="field check-field"><input id="vatRegistered" name="vatRegistered" type="checkbox"><label for="vatRegistered">VAT registered</label></div>
+              </div>
+            </section>
+
+            <section class="section" aria-labelledby="delivery-heading">
+              <div class="section-heading">
+                <h2 id="delivery-heading">Self-delivery route</h2>
+                <p class="section-note">Delivery days follow trees sold. Miles also include supplier collection trips.</p>
+              </div>
+              <div class="field-grid">
+                <div class="field"><label for="treesPerVanLoad">Trees per van load</label><input id="treesPerVanLoad" name="treesPerVanLoad" type="number" min="1" step="1" value="30"></div>
+                <div class="field"><label for="collectionTripsPerDay">Collection loads per day</label><input id="collectionTripsPerDay" name="collectionTripsPerDay" type="number" min="1" step="1" value="2"></div>
+                <div class="field"><label for="treesPerDeliveryDay">Trees delivered per day</label><input id="treesPerDeliveryDay" name="treesPerDeliveryDay" type="number" min="1" step="1" value="20"></div>
+                <div class="field"><label for="collectionRoundTripMiles">Miles per supplier return trip</label><input id="collectionRoundTripMiles" name="collectionRoundTripMiles" type="number" min="0" step="0.1" value="0"></div>
+                <div class="field"><label for="depotToFirstMiles">Depot to first delivery, miles</label><input id="depotToFirstMiles" name="depotToFirstMiles" type="number" min="0" step="0.1" value="12"></div>
+                <div class="field"><label for="routeMilesPerDay">Remaining route miles/day</label><input id="routeMilesPerDay" name="routeMilesPerDay" type="number" min="0" step="0.1" value="45"></div>
+                <div class="field"><label for="returnToDepotMiles">Last delivery to depot, miles</label><input id="returnToDepotMiles" name="returnToDepotMiles" type="number" min="0" step="0.1" value="12"></div>
+                <div class="field"><label for="vanMpg">Loaded van MPG</label><input id="vanMpg" name="vanMpg" type="number" min="0" step="0.1" value="25"></div>
+                <div class="field"><label for="dieselPerLitre">Diesel price/litre</label><input id="dieselPerLitre" name="dieselPerLitre" type="number" min="0" step="0.01" value="1.89"></div>
+              </div>
+              <p class="section-footnote">Collection and delivery are budgeted as separate van days. The 30-tree load is a planning assumption for netted 6–7 ft trees; reduce it for taller or bulkier stock. Check both van payload and internal length with the hire firm. Enter the actual supplier-to-depot return mileage; it starts at zero because your collection route is not known.</p>
+            </section>
+
+            <section class="section" aria-labelledby="cost-heading">
+              <div class="section-heading"><h2 id="cost-heading">Van, labour and other costs</h2></div>
+              <div class="field-grid">
+                <div class="field"><label for="vanDailyRateExVat">Van hire/day, ex VAT</label><input id="vanDailyRateExVat" name="vanDailyRateExVat" type="number" min="0" step="0.01" value="47.86"></div>
+                <div class="field"><label for="driverHoursPerDay">Driver hours/day</label><input id="driverHoursPerDay" name="driverHoursPerDay" type="number" min="0" step="0.25" value="8"></div>
+                <div class="field"><label for="driverHourlyCost">Driver cost/hour</label><input id="driverHourlyCost" name="driverHourlyCost" type="number" min="0" step="0.01" value="17.5"></div>
+                <div class="field"><label for="leafletResponseRate">Leaflet to customer, %</label><input id="leafletResponseRate" name="leafletResponseRate" type="number" min="0.01" max="100" step="0.01" value="0.5"></div>
+                <div class="field"><label for="leafletBatchSize">Leaflets per print batch</label><input id="leafletBatchSize" name="leafletBatchSize" type="number" min="1" step="1" value="1000"></div>
+                <div class="field"><label for="leafletBatchCostIncVat">Cost per batch, incl VAT</label><input id="leafletBatchCostIncVat" name="leafletBatchCostIncVat" type="number" min="0" step="0.01" value="50"></div>
+                <div class="field"><label for="storageCost">Storage/yard</label><input id="storageCost" name="storageCost" type="number" min="0" step="0.01" value="0"></div>
+                <div class="field"><label for="insuranceCost">Insurance/permits</label><input id="insuranceCost" name="insuranceCost" type="number" min="0" step="0.01" value="0"></div>
+                <div class="field"><label for="paymentFeeRate">Payment fee, %</label><input id="paymentFeeRate" name="paymentFeeRate" type="number" min="0" max="100" step="0.1" value="0"></div>
+                <div class="field"><label for="disposalCostPerVan">Disposal trip, all-in cost</label><input id="disposalCostPerVan" name="disposalCostPerVan" type="number" min="0" step="0.01" value="0"></div>
+                <div class="field"><label for="otherFixedCosts">Other fixed costs</label><input id="otherFixedCosts" name="otherFixedCosts" type="number" min="0" step="0.01" value="0"></div>
+              </div>
+              <p class="section-footnote">Assumes each converted leaflet customer buys one tree and all planned sales come from leaflets. Printing is rounded up to whole batches. Disposal uses one all-in trip per full or partial van load of unsold trees; it adds no separate hire, driver or fuel charge.</p>
+            </section>
+          </div>
+
+          <aside class="panel results-panel" aria-label="Current calculation">
+            <div class="result-hero" id="profit-card">
+              <p class="result-label">Operating profit</p>
+              <p class="result-value" id="result-profit">£0</p>
+              <p class="result-message" id="break-even-message"></p>
+            </div>
+            <div class="result-grid">
+              <div class="result-item"><span>Revenue</span><strong id="result-revenue">£0</strong></div>
+              <div class="result-item"><span>Total costs</span><strong id="result-costs">£0</strong></div>
+              <div class="result-item"><span>Margin</span><strong id="result-margin">—</strong></div>
+              <div class="result-item"><span>Break-even trees</span><strong id="result-break-even">—</strong></div>
+              <div class="result-item"><span>Total trees purchased</span><strong id="result-purchased">0</strong></div>
+              <div class="result-item"><span>Trees sold</span><strong id="result-sold">0</strong></div>
+              <div class="result-item"><span>Stands sold</span><strong id="result-stands-sold">0</strong></div>
+              <div class="result-item"><span>Stand contribution</span><strong id="result-stand-contribution">£0</strong></div>
+            </div>
+            <div class="result-detail">
+              <div class="detail-row"><span>Collection trips / days</span><strong><span id="result-collection-trips">0</span> / <span id="result-collection-days">0</span></strong></div>
+              <div class="detail-row"><span>Delivery days</span><strong id="result-delivery-days">0</strong></div>
+              <div class="detail-row"><span>Van hire / driver days</span><strong id="result-van-days">0</strong></div>
+              <div class="detail-row"><span>Van hire cost</span><strong id="result-van-cost">£0.00</strong></div>
+              <div class="detail-row"><span>Driver cost</span><strong id="result-driver-cost">£0.00</strong></div>
+              <div class="detail-row"><span>Leaflets needed / printed</span><strong><span id="result-leaflets-needed">0</span> / <span id="result-leaflets-printed">0</span></strong></div>
+              <div class="detail-row"><span>Leaflet cost</span><strong id="result-leaflet-cost">£0.00</strong></div>
+              <div class="detail-row"><span>Disposal van loads</span><strong id="result-disposal-trips">0</strong></div>
+              <div class="detail-row"><span>Disposal cost</span><strong id="result-disposal-cost">£0.00</strong></div>
+              <div class="detail-row"><span>Total route mileage</span><strong id="result-mileage">0 mi</strong></div>
+              <div class="detail-row"><span>Fuel cost</span><strong id="result-fuel">£0.00</strong></div>
+              <div class="detail-row"><span>Tree + stand inventory</span><strong id="result-inventory">£0</strong></div>
+              <div class="detail-row"><span>Stand revenue / cost</span><strong><span id="result-stand-revenue">£0</span> / <span id="result-stand-cost">£0</span></strong></div>
+              <div class="detail-row"><span>Operating costs</span><strong id="result-operating">£0</strong></div>
+            </div>
+          </aside>
+        </div>
+      </form>
+
+      <div class="lower-panels">
+        <section class="panel data-panel" aria-labelledby="economics-heading">
+          <h2 id="economics-heading">Per-tree economics</h2>
+          <div class="table-wrap"><table><thead><tr><th scope="col">Tree type</th><th scope="col">Qty</th><th scope="col">Cost/tree</th><th scope="col">Net price</th><th scope="col">Profit/tree</th><th scope="col">Margin</th></tr></thead><tbody id="product-economics"></tbody></table></div>
+        </section>
+        <section class="panel data-panel" aria-labelledby="stand-economics-heading">
+          <h2 id="stand-economics-heading">Per-stand economics</h2>
+          <div class="table-wrap"><table><thead><tr><th scope="col">Stand</th><th scope="col">Sold</th><th scope="col">Cost</th><th scope="col">Net price</th><th scope="col">Contribution</th></tr></thead><tbody id="stand-economics"></tbody></table></div>
+          <p class="footnote">Contribution is after purchase cost and payment fees, before shared delivery and marketing costs.</p>
+        </section>
+        <section class="panel data-panel" aria-labelledby="scenario-heading">
+          <h2 id="scenario-heading">Sell-through risk</h2>
+          <div class="table-wrap"><table><thead><tr><th scope="col">Sell-through</th><th scope="col">Sold</th><th scope="col">Revenue</th><th scope="col">Profit</th><th scope="col">Margin</th></tr></thead><tbody id="scenario-results"></tbody></table></div>
+          <p class="footnote">Every scenario retains the full cost of all purchased trees. Stand sales stay fixed at the quantities entered, while tree sales vary. Disposal costs apply only to unsold trees.</p>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

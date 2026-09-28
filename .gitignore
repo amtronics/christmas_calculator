@@ -1,0 +1,7 @@
+# Local source pricing and machine-specific files
+pricelist 2026.xlsx
+.env
+.env.*
+node_modules/
+*.log
+.superpowers/

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Local Christmas portrait package pricing and profit calculator.">
+    <title>Christmas portrait margins</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23164b3b'/%3E%3Ccircle cx='32' cy='31' r='17' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='32' cy='31' r='6' fill='white'/%3E%3Cpath d='M21 14h10l3-5h9l3 5h4v7H14v-7z' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="page-shell photography-page">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">2026 planning calculator</p>
+          <h1>Christmas portrait margins</h1>
+          <p>Price three at-home portrait packages and test whether your all-inclusive photographer quote leaves a useful contribution.</p>
+          <nav class="page-nav" aria-label="Calculators"><a href="./index.html">← Trees</a><span aria-current="page">Photography</span></nav>
+        </div>
+        <button class="reset-button" id="photo-reset" type="button">Reset defaults</button>
+      </header>
+
+      <p class="error" id="photo-error" role="alert" hidden></p>
+      <form id="photo-form" novalidate>
+        <div class="calculator-layout">
+          <div class="panel input-panel">
+            <section class="section" aria-labelledby="packages-heading">
+              <div class="section-heading"><h2 id="packages-heading">Advertised packages</h2><p class="section-note">Prices include VAT if registered. Fees and allowances are per booking.</p></div>
+              <div class="table-wrap">
+                <table class="photo-table">
+                  <thead><tr><th scope="col">Package</th><th scope="col">Customer price</th><th scope="col">Bookings</th><th scope="col">Photographer fee</th><th scope="col">Fee cap</th><th scope="col">Marketing/admin</th></tr></thead>
+                  <tbody id="photo-package-inputs"></tbody>
+                </table>
+              </div>
+              <p class="section-footnote">The photographer fee must include travel, setup, the at-home shoot, editing and digital delivery. Confirm the whole fee before offering a booking.</p>
+            </section>
+            <section class="section" aria-labelledby="photo-assumptions-heading">
+              <div class="section-heading"><h2 id="photo-assumptions-heading">Tax and other assumptions</h2></div>
+              <div class="field-grid">
+                <div class="field check-field"><input id="photo-vat-registered" type="checkbox" checked><label for="photo-vat-registered">VAT registered</label></div>
+                <div class="field"><label for="photo-vat-rate">VAT rate (%)</label><input id="photo-vat-rate" type="number" min="0" max="100" step="0.1" value="20"></div>
+                <div class="field"><label for="photo-payment-rate">Payment fee (%)</label><input id="photo-payment-rate" type="number" min="0" max="100" step="0.1" value="2"></div>
+                <div class="field"><label for="photo-fixed-costs">Other photography fixed costs (£)</label><input id="photo-fixed-costs" type="number" min="0" step="0.01" value="0"></div>
+              </div>
+              <p class="section-footnote">Payment fees are charged on the full customer payment. Photographer fees are treated as full costs with no assumed input-VAT recovery. Extra travel, more people, props, prints, reshoots and refunds need a revised quote or additional charge.</p>
+            </section>
+          </div>
+
+          <aside class="panel results-panel" aria-label="Photography projection" id="photo-results">
+            <div class="result-hero" id="photo-profit-card"><p class="result-label">Projected operating profit</p><p class="result-value" id="photo-profit">£0.00</p><p class="result-message" id="photo-profit-message">Enter bookings to project profit.</p></div>
+            <div class="result-grid">
+              <div class="result-item"><span>Bookings</span><strong id="photo-bookings">0</strong></div>
+              <div class="result-item"><span>Margin</span><strong id="photo-margin">—</strong></div>
+              <div class="result-item"><span>Gross customer receipts</span><strong id="photo-gross">£0.00</strong></div>
+              <div class="result-item"><span>Revenue ex VAT</span><strong id="photo-revenue">£0.00</strong></div>
+            </div>
+            <div class="result-detail">
+              <div class="detail-row"><span>Photographer fees</span><strong id="photo-photographer-cost">£0.00</strong></div>
+              <div class="detail-row"><span>Marketing/admin</span><strong id="photo-admin-cost">£0.00</strong></div>
+              <div class="detail-row"><span>Payment fees</span><strong id="photo-payment-fees">£0.00</strong></div>
+              <div class="detail-row"><span>Other fixed costs</span><strong id="photo-fixed-cost-total">£0.00</strong></div>
+              <div class="detail-row"><span>Total costs</span><strong id="photo-total-costs">£0.00</strong></div>
+            </div>
+          </aside>
+        </div>
+      </form>
+
+      <section class="panel data-panel photo-economics" id="photo-economics-panel" aria-labelledby="photo-economics-heading">
+        <h2 id="photo-economics-heading">Per-booking and package economics</h2>
+        <div class="table-wrap"><table><thead><tr><th scope="col">Package</th><th scope="col">Net revenue/booking</th><th scope="col">Photographer fee</th><th scope="col">Fee cap</th><th scope="col">Admin/booking</th><th scope="col">Payment fee/booking</th><th scope="col">Contribution/booking</th><th scope="col">Projected contribution</th><th scope="col">Margin</th></tr></thead><tbody id="photo-economics"></tbody></table></div>
+        <div class="photo-warnings" id="photo-warnings" aria-live="polite"></div>
+        <p class="footnote">These are planning contributions, not guaranteed profit. Photographer fees must remain all-inclusive; any uncovered work or overhead reduces the result.</p>
+      </section>
+    </main>
+    <script type="module" src="./photography.js"></script>
+  </body>
+</html>
