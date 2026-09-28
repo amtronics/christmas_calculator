@@ -11,6 +11,14 @@ Keep the PowerShell window open, then open `http://127.0.0.1:4173`. Press Ctrl+C
 
 The calculator is entirely local and does not store or send entered figures.
 
+## GitHub Pages deployment
+
+The static site is in `dist`. After GitHub Pages is enabled for this repository with **Source: GitHub Actions**, `.github/workflows/pages.yml` runs the Node tests and deploys `dist` automatically on every push to `main`. The workflow can also be run manually from the Actions tab. A failed test prevents deployment.
+
+The expected project URL is `https://amtronics.github.io/christmas_calculator/`, with portraits at `https://amtronics.github.io/christmas_calculator/photography.html`. These URLs will not work until the first Pages deployment succeeds. The relative links and assets in both pages allow the site to run under the `/christmas_calculator/` path.
+
+GitHub Pages on this account requires a public repository or an account upgrade. A public repository and public Pages site expose the calculator source, including embedded wholesale prices and cost assumptions. The original `pricelist 2026.xlsx` remains ignored and is not deployed. Do not enter private customer data; the calculator is a planning tool, not a booking system.
+
 ## Christmas portraits
 
 Open `http://127.0.0.1:4173/photography.html`, or use the Photography link on the tree page. This is a separate at-home portrait pricing calculator; its bookings, costs and profit do not flow into the tree figures. The Trees link takes you back.
