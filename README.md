@@ -9,7 +9,7 @@ Set-Location 'C:\dev\christmas'
 
 Keep the PowerShell window open, then open `http://127.0.0.1:4173`. Press Ctrl+C to stop the server. If the port is already in use, the calculator is already running; open the URL instead of starting a second copy.
 
-The calculator is entirely local and does not store or send entered figures.
+The calculator saves edited figures in this browser so they survive a refresh or reopening the page. Trees and Photography are saved separately. **Reset defaults** clears the saved figures for that page. The figures are not synced across browsers or devices and are not sent to a server; clearing browser site data removes them.
 
 ## GitHub Pages deployment
 

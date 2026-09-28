@@ -1,4 +1,5 @@
 import { photoPackages, calculatePhotography } from "./photography-calculator.mjs";
+import { saveInputs, restoreInputs, clearInputs } from "./form-persistence.mjs";
 
 const form = document.getElementById("photo-form");
 const packageInputs = document.getElementById("photo-package-inputs");
@@ -7,6 +8,19 @@ const results = document.getElementById("photo-results");
 const economicsPanel = document.getElementById("photo-economics-panel");
 const money = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
 const percent = new Intl.NumberFormat("en-GB", { style: "percent", minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const storageKey = "christmas-photography-v1";
+
+function browserStorage() {
+  try { return window.localStorage; } catch { return null; }
+}
+
+function inputFields() {
+  return form.querySelectorAll("input");
+}
+
+function saveCurrentInputs() {
+  saveInputs(browserStorage(), storageKey, inputFields());
+}
 
 function write(id, value) {
   document.getElementById(id).textContent = value;
@@ -122,10 +136,11 @@ function update() {
   }
 }
 
-form.addEventListener("input", update);
-form.addEventListener("change", update);
+form.addEventListener("input", () => { update(); saveCurrentInputs(); });
+form.addEventListener("change", () => { update(); saveCurrentInputs(); });
 form.addEventListener("submit", (event) => event.preventDefault());
 document.getElementById("photo-reset").addEventListener("click", () => {
+  clearInputs(browserStorage(), storageKey);
   renderPackageInputs();
   document.getElementById("photo-vat-registered").checked = true;
   document.getElementById("photo-vat-rate").value = "20";
@@ -135,4 +150,5 @@ document.getElementById("photo-reset").addEventListener("click", () => {
 });
 
 renderPackageInputs();
+restoreInputs(browserStorage(), storageKey, inputFields());
 update();

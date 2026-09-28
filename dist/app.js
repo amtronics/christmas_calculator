@@ -1,5 +1,6 @@
 import { calculateBusiness, cincoStands } from "./calculator.mjs";
 import { marketPrice, suggestedRetailPrice, supplierPrice, treeRows, treeTypes } from "./tree-catalog.mjs";
+import { saveInputs, restoreInputs, clearInputs } from "./form-persistence.mjs";
 
 const money = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
 const moneyPrecise = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -13,6 +14,19 @@ const standBody = document.querySelector("#stand-inputs");
 const economicsBody = document.querySelector("#product-economics");
 const standEconomicsBody = document.querySelector("#stand-economics");
 const scenariosBody = document.querySelector("#scenario-results");
+const storageKey = "christmas-trees-v1";
+
+function browserStorage() {
+  try { return window.localStorage; } catch { return null; }
+}
+
+function inputFields() {
+  return form.querySelectorAll("input");
+}
+
+function saveCurrentInputs() {
+  saveInputs(browserStorage(), storageKey, inputFields());
+}
 
 const defaults = {
   premiumQuality: false,
@@ -282,12 +296,17 @@ form.addEventListener("input", (event) => {
     if (event.target.value !== "" && Number.isFinite(discount) && discount >= 0 && discount <= 100) syncMarketPrices();
   }
   calculateAndRender();
+  saveCurrentInputs();
 });
 form.addEventListener("change", (event) => {
   if (event.target.name === "premiumQuality") syncPremiumPrices();
   calculateAndRender();
+  saveCurrentInputs();
 });
-resetButton.addEventListener("click", resetCalculator);
+resetButton.addEventListener("click", () => {
+  clearInputs(browserStorage(), storageKey);
+  resetCalculator();
+});
 
 function registerWebMcp() {
   const context = document.modelContext;
@@ -355,6 +374,7 @@ function registerWebMcp() {
         }
         const output = calculateAndRender();
         if (!output) throw new RangeError(errorBox.textContent);
+        saveCurrentInputs();
         return {
           treesPurchased: output.result.treesPurchased,
           standsSold: output.result.standsSold,
@@ -380,4 +400,6 @@ function registerWebMcp() {
 }
 
 resetCalculator();
+restoreInputs(browserStorage(), storageKey, inputFields());
+calculateAndRender();
 registerWebMcp();
