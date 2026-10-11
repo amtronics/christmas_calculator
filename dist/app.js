@@ -58,6 +58,8 @@ const defaults = {
 };
 
 function productRow(row, index) {
+  // Keep the remaining Noble fields in their original saved-input slots after removing 4-5 ft.
+  const fieldIndex = ({ "noble-175-200": 14, "noble-200-225": 15 })[row.id] ?? index;
   const quote = supplierPrice(row, form.elements.premiumQuality.checked);
   const market = marketPrice(row);
   const quantity = row.defaultQuantity;
@@ -66,10 +68,10 @@ function productRow(row, index) {
     <tr data-product-row="${index}" data-row-id="${row.id}">
       <th scope="row">${row.displaySize}<small>${row.size} supplier</small></th>
       <td><span class="grade-tag" data-grade>${quote.grade}</span></td>
-      <td><label class="sr-only" for="quantity-${index}">Quantity for ${treeTypes.find((type) => type.id === row.species).name}, ${row.displaySize}, supplier ${row.size}</label><input id="quantity-${index}" data-product="quantity" type="number" min="0" step="1" value="${quantity}"></td>
-      <td><label class="sr-only" for="wholesale-${index}">Collection cost for ${treeTypes.find((type) => type.id === row.species).name}, ${row.displaySize}, supplier ${row.size}</label><div class="money-input"><span>£</span><input id="wholesale-${index}" data-product="wholesaleExVat" type="number" min="0" step="0.01" value="${quote.price}"></div></td>
+      <td><label class="sr-only" for="quantity-${fieldIndex}">Quantity for ${treeTypes.find((type) => type.id === row.species).name}, ${row.displaySize}, supplier ${row.size}</label><input id="quantity-${fieldIndex}" data-product="quantity" type="number" min="0" step="1" value="${quantity}"></td>
+      <td><label class="sr-only" for="wholesale-${fieldIndex}">Collection cost for ${treeTypes.find((type) => type.id === row.species).name}, ${row.displaySize}, supplier ${row.size}</label><div class="money-input"><span>£</span><input id="wholesale-${fieldIndex}" data-product="wholesaleExVat" type="number" min="0" step="0.01" value="${quote.price}"></div></td>
       <td>${market ? `<a class="market-link" href="${market.url}" target="_blank" rel="noopener noreferrer">~${market.band} · ${money.format(market.price)}</a>` : `<span class="no-market">No match</span>`}</td>
-      <td><label class="sr-only" for="retail-${index}">Selling price for ${treeTypes.find((type) => type.id === row.species).name}, ${row.displaySize}, supplier ${row.size}</label><div class="money-input"><span>£</span><input id="retail-${index}" data-product="retailPrice" type="number" min="0" step="0.01" placeholder="Set price" value="${retail}"></div></td>
+      <td><label class="sr-only" for="retail-${fieldIndex}">Selling price for ${treeTypes.find((type) => type.id === row.species).name}, ${row.displaySize}, supplier ${row.size}</label><div class="money-input"><span>£</span><input id="retail-${fieldIndex}" data-product="retailPrice" type="number" min="0" step="0.01" placeholder="Set price" value="${retail}"></div></td>
     </tr>`;
 }
 

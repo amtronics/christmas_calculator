@@ -19,11 +19,10 @@ test("catalog offers only the selected foot bands with their agreed supplier siz
     ["norway", "5-6 ft", "175-200 cm"],
     ["fraser", "5-6 ft", "150-175 cm"],
     ["fraser", "6-7 ft", "175-200 cm"],
-    ["noble", "4-5 ft", "150-175 cm"],
     ["noble", "5-6 ft", "175-200 cm"],
     ["noble", "6-7 ft", "200-225 cm"],
   ]);
-  assert.equal(new Set(catalog.treeRows.map((row) => row.id)).size, 16);
+  assert.equal(new Set(catalog.treeRows.map((row) => row.id)).size, 15);
   assert.equal(catalog.treeRows.some((row) => Object.hasOwn(row.prices, "Budget")), false);
 });
 
@@ -69,7 +68,7 @@ test("one Premium switch uses exact-size quotes and falls back when unavailable"
 
 test("rounds percentage-based selling prices down to whole pounds", () => {
   const nordmann = catalog.treeRows.find((row) => row.id === "nordmann-175-200");
-  const nobleWithoutMatch = catalog.treeRows.find((row) => row.id === "noble-150-175");
+  const nobleWithoutMatch = { species: "noble", displaySize: "4-5 ft" };
   const norway4ft = catalog.treeRows.find((row) => row.id === "norway-150-175");
   const norway5ft = catalog.treeRows.find((row) => row.id === "norway-175-200");
   assert.equal(catalog.suggestedRetailPrice(nordmann, 5), 113);

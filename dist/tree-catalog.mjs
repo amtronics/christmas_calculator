@@ -15,7 +15,6 @@ const supplierRows = [
   ["norway", "5-6 ft", "175-200 cm", { Premium: 19.6 }],
   ["fraser", "5-6 ft", "150-175 cm", { Premium: 26.55 }],
   ["fraser", "6-7 ft", "175-200 cm", { Premium: 30.3 }],
-  ["noble", "4-5 ft", "150-175 cm", { Premium: 27.5 }],
   ["noble", "5-6 ft", "175-200 cm", { Premium: 33 }],
   ["noble", "6-7 ft", "200-225 cm", { Premium: 41 }],
 ];
