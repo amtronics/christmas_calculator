@@ -1,6 +1,7 @@
 import { calculateBusiness, cincoStands } from "./calculator.mjs";
 import { marketPrice, suggestedRetailPrice, supplierPrice, treeRows, treeTypes } from "./tree-catalog.mjs";
 import { saveInputs, restoreInputs, clearInputs } from "./form-persistence.mjs";
+import { treeOfferingsCsv } from "./tree-export.mjs";
 
 const money = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 });
 const moneyPrecise = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -306,6 +307,25 @@ form.addEventListener("change", (event) => {
 resetButton.addEventListener("click", () => {
   clearInputs(browserStorage(), storageKey);
   resetCalculator();
+});
+
+document.querySelector("#export-tree-offerings").addEventListener("click", () => {
+  const exportError = document.querySelector("#export-error");
+  try {
+    const csv = treeOfferingsCsv(form.elements.percentBelowMarket.value);
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "christmas-tree-offerings.csv";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    exportError.hidden = true;
+  } catch (error) {
+    exportError.textContent = error.message;
+    exportError.hidden = false;
+  }
 });
 
 function registerWebMcp() {

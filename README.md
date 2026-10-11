@@ -11,6 +11,8 @@ Keep the PowerShell window open, then open `http://127.0.0.1:4173`. Press Ctrl+C
 
 The calculator saves edited figures in this browser so they survive a refresh or reopening the page. Trees and Photography are saved separately. **Reset defaults** clears the saved figures for that page. The figures are not synced across browsers or devices and are not sent to a server; clearing browser site data removes them.
 
+On the Trees page, **Export tree offerings CSV** downloads all 16 offers with tree type, offered size, We Tree Kings price and a price calculated using the current **Below We Tree Kings price (%)** setting. Prices are in GBP with two decimal places; the discount is recorded in the column heading. The export uses the percentage calculation, regardless of manual selling-price edits or stock quantities. Both price columns are blank for offers without a We Tree Kings match.
+
 ## GitHub Pages deployment
 
 The static site is in `dist`. After GitHub Pages is enabled for this repository with **Source: GitHub Actions**, `.github/workflows/pages.yml` runs the Node tests and deploys `dist` automatically on every push to `main`. The workflow can also be run manually from the Actions tab. A failed test prevents deployment.
