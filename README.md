@@ -11,7 +11,7 @@ Keep the PowerShell window open, then open `http://127.0.0.1:4173`. Press Ctrl+C
 
 The calculator saves edited figures in this browser so they survive a refresh or reopening the page. Trees and Photography are saved separately. **Reset defaults** clears the saved figures for that page. The figures are not synced across browsers or devices and are not sent to a server; clearing browser site data removes them.
 
-On the Trees page, **Export tree offerings CSV** downloads all 16 offers with tree type, offered size, We Tree Kings price and a price calculated using the current **Below We Tree Kings price (%)** setting. Prices are in GBP with two decimal places; the discount is recorded in the column heading. The export uses the percentage calculation, regardless of manual selling-price edits or stock quantities. Both price columns are blank for offers without a We Tree Kings match.
+On the Trees page, **Export tree offerings CSV** downloads all 16 offers with tree type, offered size, We Tree Kings price and a price calculated using the current **Below We Tree Kings price (%)** setting. Discounted prices are rounded down to whole pounds and exported without decimal places; the discount is recorded in the column heading. The export uses the percentage calculation, regardless of manual selling-price edits or stock quantities. Both price columns are blank for offers without a We Tree Kings match.
 
 ## GitHub Pages deployment
 
@@ -35,7 +35,7 @@ The stock table contains 16 cut-tree offers with numeric Bolton-yard collection 
 
 We Tree Kings cut-tree variant prices were checked on 22 September 2026. The market column matches the offered foot band to the published band; comparisons are planning references, particularly where a supplier centimetre range differs from its chosen offer label. Rows with a comparison start with a discounted editable selling price. The Noble Fir 4-5 ft row has no match and needs a selling price entered before a positive quantity can be included in profit.
 
-The default selling price is 5% below the matched We Tree Kings comparison, rounded to the nearest penny. Changing the global percentage recalculates every matched selling-price row, including any manual edits; rows without a comparison are untouched. Individual prices remain editable until the percentage changes again or the calculator is reset.
+The default selling price is 5% below the matched We Tree Kings comparison, rounded down to whole pounds. Changing the global percentage recalculates every matched selling-price row, including any manual edits; rows without a comparison are untouched. Individual prices remain editable until the percentage changes again or the calculator is reset. Previously saved percentage-based prices are converted to whole pounds when the page loads; custom prices are preserved.
 
 Van hire days are calculated, not entered: collection trips = purchased trees divided by trees per load, rounded up; collection days = trips divided by trips per day, rounded up; delivery days = sold trees divided by trees delivered per day, rounded up. Van and driver days are the sum of collection and delivery days. The default capacity is 30 netted 6–7 ft trees per load, with two collection trips and 20 deliveries per day; adjust for tree dimensions, van payload, and route capacity. Van hire is priced per day. Collection mileage is an additional per-trip input and defaults to zero until an actual route is entered.
 

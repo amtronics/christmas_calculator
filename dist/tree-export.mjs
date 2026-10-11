@@ -11,7 +11,7 @@ export function treeOfferingsCsv(percentBelow) {
       treeTypes.find((type) => type.id === row.species).name,
       row.displaySize,
       marketPrice(row)?.price.toFixed(2) ?? "",
-      suggestedRetailPrice(row, discount)?.toFixed(2) ?? "",
+      suggestedRetailPrice(row, discount)?.toString() ?? "",
     ]),
   ];
   // UTF-8 BOM and CRLF keep the download compatible with Excel.

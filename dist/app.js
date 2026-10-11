@@ -421,5 +421,17 @@ function registerWebMcp() {
 
 resetCalculator();
 restoreInputs(browserStorage(), storageKey, inputFields());
+// Upgrade previously saved percentage-based prices without replacing custom prices.
+const restoredDiscount = readNumber("percentBelowMarket");
+if (Number.isFinite(restoredDiscount) && restoredDiscount >= 0 && restoredDiscount <= 100) {
+  for (const rowElement of productBody.querySelectorAll("[data-product-row]")) {
+    const row = treeRows[Number(rowElement.dataset.productRow)];
+    const market = marketPrice(row);
+    const field = rowElement.querySelector('[data-product="retailPrice"]');
+    if (market && field.value !== "" && Number(field.value) === Math.round(market.price * (100 - restoredDiscount)) / 100) {
+      field.value = String(suggestedRetailPrice(row, restoredDiscount));
+    }
+  }
+}
 calculateAndRender();
 registerWebMcp();

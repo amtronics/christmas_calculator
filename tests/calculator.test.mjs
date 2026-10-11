@@ -67,14 +67,18 @@ test("one Premium switch uses exact-size quotes and falls back when unavailable"
   assert.equal(catalog.marketPrice(nordmann).price, 119);
 });
 
-test("suggests selling prices a chosen percentage below We Tree Kings", () => {
+test("rounds percentage-based selling prices down to whole pounds", () => {
   const nordmann = catalog.treeRows.find((row) => row.id === "nordmann-175-200");
   const nobleWithoutMatch = catalog.treeRows.find((row) => row.id === "noble-150-175");
   const norway4ft = catalog.treeRows.find((row) => row.id === "norway-150-175");
   const norway5ft = catalog.treeRows.find((row) => row.id === "norway-175-200");
-  assert.equal(catalog.suggestedRetailPrice(nordmann, 5), 113.05);
+  assert.equal(catalog.suggestedRetailPrice(nordmann, 5), 113);
   assert.equal(catalog.suggestedRetailPrice(nordmann, 0), 119);
-  assert.equal(catalog.suggestedRetailPrice(nordmann, 10), 107.1);
+  assert.equal(catalog.suggestedRetailPrice(nordmann, 10), 107);
+  assert.equal(catalog.suggestedRetailPrice(nordmann, 5.5), 112);
+  assert.equal(catalog.suggestedRetailPrice(nordmann, 100), 0);
+  const fraser = catalog.treeRows.find((row) => row.id === "fraser-175-200");
+  assert.equal(catalog.suggestedRetailPrice(fraser, 99.2), 1);
   assert.equal(catalog.marketPrice(norway4ft).price, 80);
   assert.equal(catalog.marketPrice(norway5ft).price, 90);
   assert.equal(catalog.suggestedRetailPrice(nobleWithoutMatch, 5), null);

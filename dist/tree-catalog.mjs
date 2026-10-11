@@ -82,5 +82,8 @@ export function suggestedRetailPrice(row, percentBelow) {
     throw new RangeError("Price below We Tree Kings must be between 0% and 100%.");
   }
   const market = marketPrice(row);
-  return market ? Math.round(market.price * (100 - discount)) / 100 : null;
+  if (!market) return null;
+  const discounted = market.price * (100 - discount) / 100;
+  // Avoid dropping an extra pound when binary arithmetic puts an exact integer just below itself.
+  return Math.floor(discounted + Number.EPSILON * market.price);
 }
